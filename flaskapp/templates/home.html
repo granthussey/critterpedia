@@ -2,7 +2,83 @@
 
 {% block content %}
 
-<h1>Hello all!</h1>
-<h3> Please select either Fish or Bugs database from the navigation bar above</h3>
+<h1 class="display-4 text-center">Welcome!</h1>
+
+<p class="lead text-center">
+    This is a fan-made Animal Crossing: New Horizons database
+</p>
+
+<br>
+
+<p class="text-muted text-center">In my social-distancing lonesome, I've created some tools to aid our gameplay.</p>
+<p class="text-muted text-center">I hope they help you out as much as they help me!</p>
+
+<br>
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">The Fish Database</h5>
+                <p class="card-text">Explore ACNH fish by name, month, or month leaving/arriving</p>
+                <a href="{{ url_for('main.fish') }}" class="btn btn-primary">Visit Fish</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">The Bug Database</h5>
+                <p class="card-text">Explore ACNH bugs by name, month, or month leaving/arriving</p>
+                <a href="{{ url_for('main.bugs') }}" class="btn btn-primary">Visit Bugs</a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Turnip Research</h5>
+                <p class="card-text">Help me validate Sow Joan's Stalk Market trends by providing your turnip data
+                    weekly!</p>
+                <a href="https://forms.gle/Z75sZL6sGrD5gbZo9" class="btn btn-primary">Help Out</a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Item Database</h5>
+                <p class="card-text">Coming soon, along with other tools!</p>
+                <a href="#" class="btn btn-primary">Coming Soon!</a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
 
 {% endblock content %}

@@ -2,6 +2,120 @@
 
 {% block content %}
 
-<div class="div">Bugs coming soon!</div>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="" method="POST">
+                {{ bug_name_form.hidden_tag()}}
+                {{ bug_name_form.csrf_token }}
+
+
+                {{ bug_name_form.bug_name.label(for='bug-name-dropdown')}}
+                <div class="input-group mb-3">
+                    {{bug_name_form.bug_name(id='bug-leaving-dropdown', class='custom-select') }}
+                    <div class="input-group-append">
+                        {{ bug_name_form.submit(class="btn btn-outline-info ") }}
+                    </div>
+                </div>
+        </div>
+        </form>
+        <div class="col-md-6">
+            <form action="" method="POST">
+                {{ bug_month_form.hidden_tag()}}
+                {{ bug_month_form.csrf_token }}
+
+                {{ bug_month_form.month_name.label(for='month-name-dropdown')}}
+                <div class="input-group mb-3">
+                    {{bug_month_form.month_name(id='month-name-dropdown', class='custom-select') }}
+                    <div class="input-group-append">
+                        {{ bug_month_form.submit(class="btn btn-outline-info ") }}
+                    </div>
+                </div>
+        </div>
+        </form>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <form action="" method="POST">
+                {{ bug_leaving_form.hidden_tag()}}
+                {{ bug_leaving_form.csrf_token }}
+
+                {{ bug_leaving_form.month_leaving.label(for='bug-leaving-dropdown')}}
+                <div class="input-group mb-3">
+                    {{bug_leaving_form.month_leaving(id='bug-leaving-dropdown', class='custom-select') }}
+                    <div class="input-group-append">
+                        {{ bug_leaving_form.submit(class="btn btn-outline-info ") }}
+                    </div>
+                </div>
+        </div>
+        </form>
+        <div class="col-md-6">
+
+            <form action="" method="POST">
+                {{ bug_arriving_form.hidden_tag()}}
+                {{ bug_arriving_form.csrf_token }}
+
+                {{ bug_arriving_form.month_arriving.label(for='bug-arriving-dropdown')}}
+                <div class="input-group mb-3">
+                    {{bug_arriving_form.month_arriving(id='bug-arriving-dropdown', class='custom-select') }}
+                    <div class="input-group-append">
+                        {{ bug_arriving_form.submit(class="btn btn-outline-info ") }}
+                    </div>
+                </div>
+        </div>
+        </form>
+
+    </div>
+
+    <div class="row-md-12 mb-3">
+        <form action="" method="POST">
+            {{ reset_bug_form.hidden_tag()}}
+            {{ reset_bug_form.csrf_token }}
+
+            {{reset_bug_form.submit(class="btn btn-outline-info")}}
+        </form>
+    </div>
+
+
+</div>
+
+{% if table_exists %}
+
+<!-- {{ result | safe }} -->
+
+
+<table class="table">
+    <thead>
+        <tr>
+            {% for col in selected_df.columns%}
+            <th scope="col">{{col}}</th>
+            {% endfor%}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for each_row in row_list %}
+        <tr>
+            {% for each_col in selected_df.columns %}
+            <td>{{ each_row[each_col] }}</td>
+            {% endfor %}
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+
+
+
+</table>
+
+
+
+{% endif %}
 
 {% endblock content %}

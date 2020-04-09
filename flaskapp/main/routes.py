@@ -6,6 +6,8 @@ from flask import redirect
 from flask import url_for
 
 from flaskapp.config import FishDatabase
+from flaskapp.config import BugDatabase
+
 
 import flaskapp.personal_df_tools as tls
 import flaskapp.ac_df_tools as ac_tls
@@ -18,6 +20,15 @@ from .forms import (
     FishLeavingForm,
     FishArrivingForm,
     ResetFishForm,
+)
+
+
+from .forms import (
+    BugNameForm,
+    BugMonthForm,
+    BugLeavingForm,
+    BugArrivingForm,
+    ResetBugForm,
 )
 
 
@@ -180,6 +191,149 @@ def fish():
     )
 
 
-@main.route("/bugs")
+@main.route("/bugs", methods=["GET", "POST"])
 def bugs():
-    return render_template("bugs.html", title="Bugs")
+    bug_name_form = BugNameForm()
+    bug_month_form = BugMonthForm()
+    bug_leaving_form = BugLeavingForm()
+    bug_arriving_form = BugArrivingForm()
+    reset_bug_form = ResetBugForm()
+
+    if bug_name_form.validate_on_submit():
+        # print("DONE bug NAME")
+        # print(bug_name_form.errors)
+        # print(bug_name_form.bug_name.data)
+        # print(type(bug_name_form.bug_name.data))
+
+        # filtered_df = BugDatabase.ENDUSER_BUG_DF.sort_values("Location")
+        filtered_df = ac_tls.filter_df_by_critter_name(
+            BugDatabase.BACKEND_BUG_DF,
+            BugDatabase.ENDUSER_BUG_DF,
+            bug_name_form.bug_name.data,
+        )
+
+        selected_df = filtered_df.sort_values("Location")
+
+        return render_template(
+            "bugs.html",
+            bug_name_form=bug_name_form,
+            bug_month_form=bug_month_form,
+            bug_arriving_form=bug_arriving_form,
+            bug_leaving_form=bug_leaving_form,
+            reset_bug_form=reset_bug_form,
+            table_exists=True,
+            selected_df=selected_df,
+            row_list=tls.generate_row_list(selected_df),
+            title="Bugs",
+        )
+
+    if bug_month_form.validate_on_submit():
+        # print("DONE bug MONTH")
+        # print(bug_month_form.errors)
+        # print(bug_month_form.month_name.data)
+        # print(type(bug_month_form.month_name.data))
+
+        filtered_df = ac_tls.filter_df_by_month_name(
+            BugDatabase.BACKEND_BUG_DF,
+            BugDatabase.ENDUSER_BUG_DF,
+            bug_month_form.month_name.data,
+        )
+
+        selected_df = filtered_df.sort_values("Location")
+
+        return render_template(
+            "bugs.html",
+            bug_name_form=bug_name_form,
+            bug_month_form=bug_month_form,
+            bug_arriving_form=bug_arriving_form,
+            bug_leaving_form=bug_leaving_form,
+            reset_bug_form=reset_bug_form,
+            table_exists=True,
+            selected_df=selected_df,
+            row_list=tls.generate_row_list(selected_df),
+            title="Bugs",
+        )
+
+    if bug_leaving_form.validate_on_submit():
+        # print("DONE bug LEAVING")
+        # print(bug_leaving_form.errors)
+        # print(bug_leaving_form.month_leaving.data)
+        # print(type(bug_leaving_form.month_leaving.data))
+
+        filtered_df = ac_tls.filter_df_by_species_leaving(
+            BugDatabase.BACKEND_BUG_DF,
+            BugDatabase.ENDUSER_BUG_DF,
+            BugDatabase.AVAIL_MONTHS,
+            bug_leaving_form.month_leaving.data,
+        )
+
+        selected_df = filtered_df.sort_values("Location")
+
+        return render_template(
+            "bugs.html",
+            bug_name_form=bug_name_form,
+            bug_month_form=bug_month_form,
+            bug_arriving_form=bug_arriving_form,
+            bug_leaving_form=bug_leaving_form,
+            reset_bug_form=reset_bug_form,
+            table_exists=True,
+            selected_df=selected_df,
+            row_list=tls.generate_row_list(selected_df),
+            title="Bugs",
+        )
+
+    if bug_arriving_form.validate_on_submit():
+        # print("DONE bug ARRIVING")
+        # print(bug_arriving_form.errors)
+        # print(bug_arriving_form.month_arriving.data)
+        # print(type(bug_arriving_form.month_arriving.data))
+
+        filtered_df = ac_tls.filter_df_by_species_arriving(
+            BugDatabase.BACKEND_BUG_DF,
+            BugDatabase.ENDUSER_BUG_DF,
+            BugDatabase.AVAIL_MONTHS,
+            bug_arriving_form.month_arriving.data,
+        )
+
+        selected_df = filtered_df.sort_values("Location")
+
+        return render_template(
+            "bugs.html",
+            bug_name_form=bug_name_form,
+            bug_month_form=bug_month_form,
+            bug_arriving_form=bug_arriving_form,
+            bug_leaving_form=bug_leaving_form,
+            reset_bug_form=reset_bug_form,
+            table_exists=True,
+            selected_df=selected_df,
+            row_list=tls.generate_row_list(selected_df),
+            title="Bugs",
+        )
+
+    if reset_bug_form.validate_on_submit():
+
+        return render_template(
+            "bugs.html",
+            bug_name_form=bug_name_form,
+            bug_month_form=bug_month_form,
+            bug_arriving_form=bug_arriving_form,
+            bug_leaving_form=bug_leaving_form,
+            reset_bug_form=reset_bug_form,
+            table_exists=True,
+            selected_df=BugDatabase.ENDUSER_BUG_DF,
+            row_list=tls.generate_row_list(BugDatabase.ENDUSER_BUG_DF),
+            title="Bugs",
+        )
+
+    return render_template(
+        "bugs.html",
+        bug_name_form=bug_name_form,
+        bug_month_form=bug_month_form,
+        bug_arriving_form=bug_arriving_form,
+        bug_leaving_form=bug_leaving_form,
+        reset_bug_form=reset_bug_form,
+        table_exists=False,
+        selected_df=None,
+        row_list=None,
+        title="Bugs",
+    )
